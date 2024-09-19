@@ -2,15 +2,15 @@ import Header from "./components/Header"
 import Footer from "./components/Footer"
 import ProductList from "./components/ProductList"
 import Cart from "./components/Cart"
-import { useState } from "react"
+import { ReactElement, useState } from "react"
 
-function App() {
+function App(): ReactElement  {
 
   const [viewCart, setViewCart] = useState<boolean>(false)
 
-  const pageContent = viewCart ? <Cart/> : <ProductList/>
+  const pageContent: ReactElement = viewCart ? <Cart/> : <ProductList/>
 
-  const content = (
+  const content: ReactElement = (
     <>
     <Header viewCart={viewCart} setViewCart={setViewCart} />
     {pageContent}

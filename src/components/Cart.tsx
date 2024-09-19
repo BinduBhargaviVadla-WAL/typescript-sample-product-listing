@@ -1,21 +1,22 @@
 import useCart from "../hooks/useCart"
-import { useState } from "react"
+import { ReactElement, useState } from "react"
 import CartLineItem from "./CartLineItem"
+import { CartItemType } from "../context/CartProvider"
 
-const Cart = () => {
+const Cart = (): ReactElement => {
     const [confirm, setConfirm] = useState<boolean>(false)
     const {dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart} = useCart()
 
-    const onSubmitOrder = () => {
+    const onSubmitOrder = (): void => {
         dispatch({type: REDUCER_ACTIONS.SUBMIT})
         setConfirm(true)
     }
 
-    const pageContent = confirm ? <h2>Thank you for your order.</h2>
+    const pageContent: ReactElement = confirm ? <h2>Thank you for your order.</h2>
     : <>
         <h2 className="offscreen">Cart</h2>
         <ul className="cart">
-            {cart.map(item => {
+            {cart.map((item: CartItemType) => {
                 return (
                     <CartLineItem
                         key={item.sku}
@@ -33,7 +34,7 @@ const Cart = () => {
         </div>
     </>
 
-    const content = (
+    const content: ReactElement = (
         <main className="main__cart">
             {pageContent}
         </main>

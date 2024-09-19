@@ -29,7 +29,7 @@ const reducer = (state: CartStateType, action: ReducerAction): CartStateType => 
     switch (action.type) {
         case REDUCER_ACTION_TYPE.ADD: {
             if (!action.payload) {
-                throw new Error('action.paload missing in ADD action')
+                throw new Error('action.payload missing in ADD action')
             }
 
             const { sku, name, price} = action.payload
@@ -58,7 +58,7 @@ const reducer = (state: CartStateType, action: ReducerAction): CartStateType => 
             const itemExists: CartItemType | undefined = state.cart.find(item => item.sku === sku)
 
             if (!itemExists) {
-                throw new Error('Item must exist in order to update qunatity')
+                throw new Error('Item must exist in order to update quantity')
             }
 
             const updatedItem: CartItemType = { ...itemExists, qty }

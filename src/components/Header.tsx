@@ -1,14 +1,15 @@
 import Nav from "./Nav"
 import useCart from "../hooks/useCart"
+import { ReactElement } from "react"
 
 type PropsType = {
     viewCart: boolean,
     setViewCart: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Header = ({viewCart, setViewCart}: PropsType) => {
+const Header = ({viewCart, setViewCart}: PropsType): ReactElement => {
     const { totalItems, totalPrice } = useCart()
-    const content = (
+    const content: ReactElement = (
         <header className="header">
             <div className="header__title-bar">
                 <h1>Widgets</h1>

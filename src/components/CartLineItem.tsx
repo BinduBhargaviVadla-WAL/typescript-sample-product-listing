@@ -3,18 +3,18 @@ import { ReactElement, ChangeEvent, memo } from "react"
 import { ReducerAction } from "../context/CartProvider"
 import { ReducerActionType } from "../context/CartProvider"
 
-type PropsType = {
+interface PropsType {
     item: CartItemType,
     dispatch: React.Dispatch<ReducerAction>,
     REDUCER_ACTIONS: ReducerActionType
 }
 
-const CartLineItem = ({item, dispatch, REDUCER_ACTIONS}: PropsType) => {
+const CartLineItem = ({item, dispatch, REDUCER_ACTIONS}: PropsType): ReactElement => {
     const img: string =  new URL(`../images/${item.sku}.jpg`, import.meta.url).href
     console.log(img)
 
     const lineTotal: number = (item.qty * item.price)
-    const highestQty: number =20 > item.qty ? 20 : item.qty
+    const highestQty: number = 20 > item.qty ? 20 : item.qty
 
     const optionValues: number[] = [...Array(highestQty).keys()].map(i => i+1)
 
@@ -22,19 +22,19 @@ const CartLineItem = ({item, dispatch, REDUCER_ACTIONS}: PropsType) => {
         return <option key={`opt${val}`} value={val}>{val}</option>
     })
 
-    const onChangeQty = (e: ChangeEvent<HTMLSelectElement>) => {
+    const onChangeQty = (e: ChangeEvent<HTMLSelectElement>): void => {
         dispatch({
             type: REDUCER_ACTIONS.QUANTITY,
             payload: { ...item, qty: Number(e.target.value) }
         })
     }
 
-    const onRemoveFromCart = () => dispatch({
+    const onRemoveFromCart = (): void => dispatch({
         type: REDUCER_ACTIONS.REMOVE,
         payload: item,
     })
 
-    const content = (
+    const content: ReactElement = (
         <li className="cart__item">
             <img src={img} alt={item.name} className="cart__img" />
             <div aria-label="Item Name">{item.name}</div>
@@ -66,7 +66,7 @@ const CartLineItem = ({item, dispatch, REDUCER_ACTIONS}: PropsType) => {
 
     return content
 }
-function areItemsEqual({item: prevItem}: PropsType, {item: nextItem}: PropsType) {
+function areItemsEqual({item: prevItem}: PropsType, {item: nextItem}: PropsType): boolean {
     return Object.keys(prevItem).every(key => {
         return prevItem[key as keyof CartItemType] === nextItem[key as keyof CartItemType]
     })

@@ -1,17 +1,17 @@
 import useCart from "../hooks/useCart"
 import useProducts from "../hooks/useProducts"
-import { UseProductsContextType } from "../context/ProductsProvider"
 import { ReactElement } from "react"
 import Product from "./Product"
+import { ProductType } from "../context/ProductsProvider"
 
-const ProductList = () => {
+const ProductList = (): React.FC => {
     const { dispatch, REDUCER_ACTIONS, cart} = useCart()
     const {products} = useProducts()
 
     let pageContent: ReactElement | ReactElement[] = <p>Loading ...</p>
 
     if(products?.length) {
-        pageContent = products.map(product => {
+        pageContent = products.map((product: ProductType) => {
             const inCart: boolean = cart.some(item => item.sku === product.sku)
             return (
                 <Product 
@@ -25,12 +25,11 @@ const ProductList = () => {
         })
     }
     
-    const content = (
+    return (
         <main className="main main--products">
             {pageContent}
         </main>
     )
-    return content
 }
 
 export default ProductList
